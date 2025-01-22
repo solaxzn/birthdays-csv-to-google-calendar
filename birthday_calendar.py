@@ -71,6 +71,7 @@ def main():
 
     file_path = "birthdays.csv"
     df = pd.read_csv(file_path)
+    # print(df) # Debug dataframe
 
     for index, row in df.iterrows():
         if pd.isna(row.get("Added_to_calendar")):
@@ -78,12 +79,10 @@ def main():
                 event = create_birthday_event(service, row['Name'], row['Birthday'])
                 print(f"{row['Name']}\'s birthday added to your calendar!")
                 df.at[index, "Added_to_calendar"] = "Yes"
-
             except Exception as e:
                 print(f"Error creating event for {row['Name']}: {str(e)}")
 
     df.to_csv(file_path, index=False)
-    print(f"Updated {file_path} with 'Added_to_calendar' status.")
 
 
 if __name__ == '__main__':
